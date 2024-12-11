@@ -50,6 +50,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     preemptible  = true
     machine_type = "e2-medium"
     disk_size_gb = "100"
+    disk_type = "pd-balanced"
 
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"

@@ -39,3 +39,4 @@ terraform.rc
 .terraform.*.*
 
 k*.json
+config.txt
