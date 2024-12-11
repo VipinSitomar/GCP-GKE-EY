@@ -1,6 +1,7 @@
 provider "google" {
   project = var.project_id
   region  = var.region
+  credentials = file("key.json")
 }
 
 resource "google_project_service" "required_services" {
@@ -15,7 +16,7 @@ resource "google_project_service" "required_services" {
 }
 
 resource "google_container_cluster" "main-cluster" {
-  name     = "ey-gke-cluster"
+  name     = "main-gke-cluster1"
   location = var.region
 
   remove_default_node_pool = true
@@ -23,8 +24,19 @@ resource "google_container_cluster" "main-cluster" {
   initial_node_count       = 1
   cluster_autoscaling {
     enabled = true
+    resource_limits {
+      resource_type = "cpu"
+      minimum = "4"
+      maximum = "10"
+    }
+    resource_limits {
+      resource_type = "memory"
+      minimum = "15"
+      maximum = "30"
+    }
   }
 
+  
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
@@ -49,10 +61,6 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
-
-output "kubeconfig" {
-  value = google_container_cluster.main-cluster.kubeconfig_raw
-}
 
 output "cluster_name" {
   value = google_container_cluster.main-cluster.name
