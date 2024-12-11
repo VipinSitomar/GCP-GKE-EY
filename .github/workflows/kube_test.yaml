@@ -1,9 +1,6 @@
 name: Test Kubernetes Auto-scaling with NGINX
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -47,6 +44,12 @@ jobs:
           if [ -z "$EXTERNAL_IP" ]; then
             echo "Failed to get External IP" && exit 1
           fi
+
+      - name: Install Load Testing Tool (Hey)
+        run: |
+          curl -L -o hey https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+          chmod +x hey
+          sudo mv hey /usr/local/bin/
 
       - name: Simulate Traffic to Test Auto-scaling
         env:
