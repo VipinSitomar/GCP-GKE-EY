@@ -3,6 +3,17 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_project_service" "required_services" {
+  for_each = toset([
+    "compute.googleapis.com",
+    "container.googleapis.com",
+    "iam.googleapis.com",
+    "cloudresourcemanager.googleapis.com"
+  ])
+  service = each.key
+  project = var.project_id
+}
+
 resource "google_container_cluster" "main-cluster" {
   name     = "ey-gke-cluster"
   location = var.region
