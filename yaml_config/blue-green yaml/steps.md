@@ -1,4 +1,4 @@
-once cluster up and running then kused kubectl command to create deployments
+once cluster up and running then used kubectl command to create deployments
 
 
 kubectl create deployment nginx-blue --image=nginx --dry-run=client -o yaml > nginx-blue-deployment.yaml
