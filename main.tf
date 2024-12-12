@@ -1,3 +1,14 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 6.0" # Use an appropriate version for your needs
+    }
+  }
+
+  required_version = ">= 1.3.0"
+}
+
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -18,7 +29,7 @@ resource "google_project_service" "required_services" {
 resource "google_container_cluster" "main-cluster" {
   name     = "main-gke-cluster1"
   location = var.region
-
+  
   remove_default_node_pool = true
 
   initial_node_count       = 1
@@ -36,7 +47,6 @@ resource "google_container_cluster" "main-cluster" {
     }
   }
 
-  
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
@@ -51,11 +61,14 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     machine_type = "e2-medium"
     disk_size_gb = "100"
     disk_type = "pd-balanced"
-
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
+  autoscaling {
+      min_node_count = 2
+      max_node_count = 100
+    }
 
   management {
     auto_repair = true

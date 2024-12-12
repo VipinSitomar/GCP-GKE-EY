@@ -1,90 +1,187 @@
- gcloud container clusters get-credentials main-gke-cluster1 --zone us-east4-c --project qwiklabs-gcp-04-2cfccb9003a3
+t [PROJECT_ID]”
+student_01_fcf32ee91985@cloudshell:~$ gcloud config set project qwiklabs-gcp-01-221ab1ebf048
+Updated property [core/project].
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ ls
+README-cloudshell.txt
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ 
+
+
+
+
+
+
+
+
+
+
+Welcome to Cloud Shell! Type "help" to get started.
+Welcome to Cloud Shell! Type "help" to get started.
+To set your Cloud Platform project in this session use “gcloud config set project [PROJECT_ID]”
+student_01_fcf32ee91985@cloudshell:~$ gcloud config set project qwiklabs-gcp-01-221ab1ebf048
+Updated property [core/project].
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ ls
+README-cloudshell.txt
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ clear
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ gcloud container clusters get-credentials main-gke-cluster1 --zone us-central1-c --project qwiklabs-gcp-01-221ab1ebf048
+Fetching cluster endpoint and auth data.
+ERROR: (gcloud.container.clusters.get-credentials) ResponseError: code=401, message=Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. This command is authenticated as student-01-fcf32ee91985@qwiklabs.net which is the active account specified by the [core/account] property.
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ gcloud container clusters get-credentials main-gke-cluster1 --zone us-central1-c
 Fetching cluster endpoint and auth data.
 kubeconfig entry generated for main-gke-cluster1.
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get pods
-No resources found in default namespace.
-student_03_664d88b8dfcf@cloudshell:~$ kubectl create deployment nginx --image=nginx
-deployment.apps/nginx created
-student_03_664d88b8dfcf@cloudshell:~$ kubectl expose deployment nginx --type=LoadBalancer --port=80
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kiubectl get nodes
+-bash: kiubectl: command not found
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get nodes                                                                                      
+NAME                                                  STATUS   ROLES    AGE   VERSION
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-5mz8   Ready    <none>   21m   v1.30.6-gke.1125000
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-gxmg   Ready    <none>   22m   v1.30.6-gke.1125000
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr      Ready    <none>   18m   v1.30.6-gke.1125000
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-hhz3      Ready    <none>   18m   v1.30.6-gke.1125000
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl label nodes ey-node-pool pool=nginx-pool
+Error from server (NotFound): nodes "ey-node-pool" not found
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl label nodes gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr pool=nginx-pool
+node/gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr labeled
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get nodes
+NAME                                                  STATUS   ROLES    AGE   VERSION
+      app: nginx
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-5mz8   Ready    <none>   25m   v1.30.6-gke.1125000
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-gxmg   Ready    <none>   26m   v1.30.6-gke.1125000
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr      Ready    <none>   22m   v1.30.6-gke.1125000
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-hhz3      Ready    <none>   22m   v1.30.6-gke.1125000
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get nodes -o wide
+NAME                                                  STATUS   ROLES    AGE   VERSION               INTERNAL-IP   EXTERNAL-IP      OS-IMAGE                             KERNEL-VERSION   CONTAINER-RUNTIME
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-5mz8   Ready    <none>   25m   v1.30.6-gke.1125000   10.128.0.9    34.46.193.168    Container-Optimized OS from Google   6.1.112+         containerd://1.7.23
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-gxmg   Ready    <none>   26m   v1.30.6-gke.1125000   10.128.0.8    35.222.228.29    Container-Optimized OS from Google   6.1.112+         containerd://1.7.23
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr      Ready    <none>   22m   v1.30.6-gke.1125000   10.128.0.11   35.238.230.188   Container-Optimized OS from Google   6.1.112+         containerd://1.7.23
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-hhz3      Ready    <none>   22m   v1.30.6-gke.1125000   10.128.0.10   34.56.214.228    Container-Optimized OS from Google   6.1.112+         containerd://1.7.23
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ vi nginx-deployment.yaml
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ cat nginx-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+      nodeSelector:
+        pool: nginx-pool
 
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ ls
+nginx-deployment.yaml  README-cloudshell.txt
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl apply -f nginx-deployment.yaml
+
+deployment.apps/nginx created
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ 
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get nodes --show-labels
+NAME                                                  STATUS   ROLES    AGE   VERSION               LABELS
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-5mz8   Ready    <none>   26m   v1.30.6-gke.1125000   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=e2-medium,beta.kubernetes.io/os=linux,cloud.google.com/gke-boot-disk=pd-balanced,cloud.google.com/gke-container-runtime=containerd,cloud.google.com/gke-cpu-scaling-level=2,cloud.google.com/gke-logging-variant=DEFAULT,cloud.google.com/gke-max-pods-per-node=110,cloud.google.com/gke-memory-gb-scaling-level=4,cloud.google.com/gke-nodepool=nap-e2-medium-1itisjic,cloud.google.com/gke-os-distribution=cos,cloud.google.com/gke-provisioning=standard,cloud.google.com/gke-stack-type=IPV4,cloud.google.com/machine-family=e2,cloud.google.com/private-node=false,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-c,kubernetes.io/arch=amd64,kubernetes.io/hostname=gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-5mz8,kubernetes.io/os=linux,node.kubernetes.io/instance-type=e2-medium,topology.gke.io/zone=us-central1-c,topology.kubernetes.io/region=us-central1,topology.kubernetes.io/zone=us-central1-c
+gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-gxmg   Ready    <none>   27m   v1.30.6-gke.1125000   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=e2-medium,beta.kubernetes.io/os=linux,cloud.google.com/gke-boot-disk=pd-balanced,cloud.google.com/gke-container-runtime=containerd,cloud.google.com/gke-cpu-scaling-level=2,cloud.google.com/gke-logging-variant=DEFAULT,cloud.google.com/gke-max-pods-per-node=110,cloud.google.com/gke-memory-gb-scaling-level=4,cloud.google.com/gke-nodepool=nap-e2-medium-1itisjic,cloud.google.com/gke-os-distribution=cos,cloud.google.com/gke-provisioning=standard,cloud.google.com/gke-stack-type=IPV4,cloud.google.com/machine-family=e2,cloud.google.com/private-node=false,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-c,kubernetes.io/arch=amd64,kubernetes.io/hostname=gke-main-gke-cluster-nap-e2-medium-1i-0117ee6b-gxmg,kubernetes.io/os=linux,node.kubernetes.io/instance-type=e2-medium,topology.gke.io/zone=us-central1-c,topology.kubernetes.io/region=us-central1,topology.kubernetes.io/zone=us-central1-c
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr      Ready    <none>   23m   v1.30.6-gke.1125000   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=e2-medium,beta.kubernetes.io/os=linux,cloud.google.com/gke-boot-disk=pd-balanced,cloud.google.com/gke-container-runtime=containerd,cloud.google.com/gke-cpu-scaling-level=2,cloud.google.com/gke-logging-variant=DEFAULT,cloud.google.com/gke-max-pods-per-node=110,cloud.google.com/gke-memory-gb-scaling-level=4,cloud.google.com/gke-nodepool=ey-node-pool,cloud.google.com/gke-os-distribution=cos,cloud.google.com/gke-preemptible=true,cloud.google.com/gke-provisioning=preemptible,cloud.google.com/gke-stack-type=IPV4,cloud.google.com/machine-family=e2,cloud.google.com/private-node=false,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-c,kubernetes.io/arch=amd64,kubernetes.io/hostname=gke-main-gke-cluster1-ey-node-pool-a199b8cc-b6rr,kubernetes.io/os=linux,node.kubernetes.io/instance-type=e2-medium,pool=nginx-pool,topology.gke.io/zone=us-central1-c,topology.kubernetes.io/region=us-central1,topology.kubernetes.io/zone=us-central1-c
+gke-main-gke-cluster1-ey-node-pool-a199b8cc-hhz3      Ready    <none>   23m   v1.30.6-gke.1125000   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=e2-medium,beta.kubernetes.io/os=linux,cloud.google.com/gke-boot-disk=pd-balanced,cloud.google.com/gke-container-runtime=containerd,cloud.google.com/gke-cpu-scaling-level=2,cloud.google.com/gke-logging-variant=DEFAULT,cloud.google.com/gke-max-pods-per-node=110,cloud.google.com/gke-memory-gb-scaling-level=4,cloud.google.com/gke-nodepool=ey-node-pool,cloud.google.com/gke-os-distribution=cos,cloud.google.com/gke-preemptible=true,cloud.google.com/gke-provisioning=preemptible,cloud.google.com/gke-stack-type=IPV4,cloud.google.com/machine-family=e2,cloud.google.com/private-node=false,failure-domain.beta.kubernetes.io/region=us-central1,failure-domain.beta.kubernetes.io/zone=us-central1-c,kubernetes.io/arch=amd64,kubernetes.io/hostname=gke-main-gke-cluster1-ey-node-pool-a199b8cc-hhz3,kubernetes.io/os=linux,node.kubernetes.io/instance-type=e2-medium,topology.gke.io/zone=us-central1-c,topology.kubernetes.io/region=us-central1,topology.kubernetes.io/zone=us-central1-c
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl expose deployment nginx --type=LoadBalancer --port=80
 service/nginx exposed
-student_03_664d88b8dfcf@cloudshell:~$ 
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get services
-NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-kubernetes   ClusterIP      34.118.224.1    <none>        443/TCP        10m
-nginx        LoadBalancer   34.118.230.64   <pending>     80:30829/TCP   12s
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get services
-NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-kubernetes   ClusterIP      34.118.224.1    <none>        443/TCP        10m
-nginx        LoadBalancer   34.118.230.64   <pending>     80:30829/TCP   19s
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get services
-NAME         TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
-kubernetes   ClusterIP      34.118.224.1    <none>           443/TCP        12m
-nginx        LoadBalancer   34.118.230.64   34.145.176.156   80:30829/TCP   90s
-student_03_664d88b8dfcf@cloudshell:~$ go install https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-malformed import path "https:/hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64": invalid char ':'
-student_03_664d88b8dfcf@cloudshell:~$ curl -L -o hey https://github.com/rakyll/hey/releases/latest/download/hey_linux_amd64
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ 
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get svc nginx
+
+NAME    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+nginx   LoadBalancer   34.118.232.165   <pending>     80:30113/TCP   13s
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ 
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl describe svc nginx
+Name:                     nginx
+Namespace:                default
+Labels:                   <none>
+Annotations:              cloud.google.com/neg: {"ingress":true}
+Selector:                 app=nginx
+Type:                     LoadBalancer
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       34.118.232.165
+IPs:                      34.118.232.165
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  30113/TCP
+Endpoints:                10.100.3.4:80,10.100.3.5:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason                Age   From                Message
+  ----    ------                ----  ----                -------
+  Normal  EnsuringLoadBalancer  22s   service-controller  Ensuring load balancer
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get svc nginx
+NAME    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+nginx   LoadBalancer   34.118.232.165   <pending>     80:30113/TCP   37s
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get svc nginx
+NAME    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+nginx   LoadBalancer   34.118.232.165   <pending>     80:30113/TCP   40s
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get svc nginx
+NAME    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+nginx   LoadBalancer   34.118.232.165   35.192.183.128   80:30113/TCP   95s
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ curl -L -o hey https://github.com/rakyll/hey/releases/latest/download/hey_linux_amd64
     chmod +x hey
-    
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100     9    0     9    0     0     14      0 --:--:-- --:--:-- --:--:--    14
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get services
-NAME         TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
-kubernetes   ClusterIP      34.118.224.1    <none>           443/TCP        13m
-nginx        LoadBalancer   34.118.230.64   34.145.176.156   80:30829/TCP   2m39s
-student_03_664d88b8dfcf@cloudshell:~$ hey -z 1m -c 100 http://34.145.176.156                       
+100     9  100     9    0     0     14      0 --:--:-- --:--:-- --:--:--     0
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ hey -z 1m -c 100 http://35.192.183.128
 
 Summary:
-  Total:        60.2092 secs
-  Slowest:      0.6274 secs
-  Fastest:      0.2099 secs
-  Average:      0.2138 secs
-  Requests/sec: 466.7562
+  Total:        60.1992 secs
+  Slowest:      0.6136 secs
+  Fastest:      0.2038 secs
+  Average:      0.2065 secs
+  Requests/sec: 483.2788
   
-  Total data:   17283345 bytes
+  Total data:   17892195 bytes
   Size/request: 615 bytes
 
 Response time histogram:
-  0.210 [1]     |
-  0.252 [28001] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.293 [0]     |
-  0.335 [0]     |
-  0.377 [0]     |
-  0.419 [0]     |
-  0.460 [100]   |
-  0.502 [0]     |
-  0.544 [0]     |
-  0.586 [0]     |
-  0.627 [1]     |
+  0.204 [1]     |
+  0.245 [28991] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.286 [0]     |
+  0.327 [0]     |
+  0.368 [0]     |
+  0.409 [0]     |
+  0.450 [100]   |
+  0.491 [0]     |
+  0.532 [0]     |
+  0.573 [0]     |
+  0.614 [1]     |
 
 
 Latency distribution:
-  10% in 0.2110 secs
-  25% in 0.2116 secs
-  50% in 0.2131 secs
-  75% in 0.2142 secs
-  90% in 0.2154 secs
-  95% in 0.2164 secs
-  99% in 0.2170 secs
+  10% in 0.2048 secs
+  25% in 0.2052 secs
+  50% in 0.2057 secs
+  75% in 0.2062 secs
+  90% in 0.2069 secs
+  95% in 0.2074 secs
+  99% in 0.2091 secs
 
 Details (average, fastest, slowest):
-  DNS+dialup:   0.0008 secs, 0.2099 secs, 0.6274 secs
+  DNS+dialup:   0.0007 secs, 0.2038 secs, 0.6136 secs
   DNS-lookup:   0.0000 secs, 0.0000 secs, 0.0000 secs
-  req write:    0.0000 secs, 0.0000 secs, 0.0013 secs
-  resp wait:    0.2130 secs, 0.2098 secs, 0.6273 secs
-  resp read:    0.0001 secs, 0.0000 secs, 0.0013 secs
+  req write:    0.0000 secs, 0.0000 secs, 0.0021 secs
+  resp wait:    0.2057 secs, 0.2036 secs, 0.6135 secs
+  resp read:    0.0001 secs, 0.0000 secs, 0.0026 secs
 
 Status code distribution:
-  [200] 28103 responses
+  [200] 29093 responses
 
 
 
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get hpa
-kubectl get pods
-No resources found in default namespace.
-NAME                    READY   STATUS    RESTARTS   AGE
-nginx-bf5d5cf98-4dmxk   1/1     Running   0          4m34s
-student_03_664d88b8dfcf@cloudshell:~$ kubectl get hpa
-No resources found in default namespace.
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ ls
+hey  nginx-deployment.yaml  README-cloudshell.txt
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ kubectl get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-55fd748cb4-7xfmp   1/1     Running   0          7m31s
+nginx-55fd748cb4-hxd7h   1/1     Running   0          7m31s
+student_01_fcf32ee91985@cloudshell:~ (qwiklabs-gcp-01-221ab1ebf048)$ 
