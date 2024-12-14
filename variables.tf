@@ -11,5 +11,5 @@ variable "region" {
 
 variable "cluster_name" {
   description = "cluster name"
-  type = "string"
+  type = string
 }
