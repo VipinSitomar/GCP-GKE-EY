@@ -15,7 +15,7 @@ provider "google" {
 
 
 resource "google_container_cluster" "main-cluster" {
-  name     = "main-gke-cluster1"
+  name     = var.cluster_name
   deletion_protection = false
   location = var.region
   
@@ -26,7 +26,7 @@ resource "google_container_cluster" "main-cluster" {
     enabled = true
     resource_limits {
       resource_type = "cpu"
-      minimum = "4"
+      minimum = "0"
       maximum = "10"
     }
     resource_limits {
@@ -55,7 +55,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
     ]
   }
   autoscaling {
-      min_node_count = 2
+      min_node_count = 0
       max_node_count = 10
     }
 

@@ -8,3 +8,8 @@ variable "region" {
   type        = string
   default     = "europe-west3"
 }
+
+variable "cluster_name" {
+  description = "cluster name"
+  type = "string"
+}
