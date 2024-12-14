@@ -2,11 +2,9 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 6.0" # Use an appropriate version for your needs
+      version = "~> 6.0"
     }
   }
-
-  required_version = ">= 1.3.0"
 }
 
 provider "google" {
@@ -15,19 +13,10 @@ provider "google" {
   credentials = file("key.json")
 }
 
-resource "google_project_service" "required_services" {
-  for_each = toset([
-    "compute.googleapis.com",
-    "container.googleapis.com",
-    "iam.googleapis.com",
-    "cloudresourcemanager.googleapis.com"
-  ])
-  service = each.key
-  project = var.project_id
-}
 
 resource "google_container_cluster" "main-cluster" {
   name     = "main-gke-cluster1"
+  deletion_protection = false
   location = var.region
   
   remove_default_node_pool = true
@@ -59,7 +48,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   node_config {
     preemptible  = true
     machine_type = "e2-medium"
-    disk_size_gb = "100"
+    disk_size_gb = "20"
     disk_type = "pd-balanced"
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform"
@@ -67,7 +56,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
   autoscaling {
       min_node_count = 2
-      max_node_count = 100
+      max_node_count = 10
     }
 
   management {
